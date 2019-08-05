@@ -1,7 +1,7 @@
 =================
 MySQL Dump Script
 =================
-
+Simple MySQL Dump script. Required installed ``mysqldump`` unix-package.
 
 Configure boto3
 ---------------
