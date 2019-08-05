@@ -32,7 +32,7 @@ Edit Script Config
 ------------------
 Example config file:
 
-.. code-block:: cfg
+.. code-block:: ini
 
     [S3]
     Bucket = BUCKET_NAME
