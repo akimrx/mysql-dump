@@ -5,8 +5,8 @@ MySQL Dump Script
 
 Configure boto3
 ---------------
-First, install the library [boto3](https://github.com/boto/boto3) and set a default region.
-Also read documentation for [Yandex.Cloud](https://cloud.yandex.ru/docs/storage/instruments/boto)
+First, install the library `boto3 <https://github.com/boto/boto3>`__ and set a default region.
+Also read documentation for `Yandex.Cloud <https://cloud.yandex.ru/docs/storage/instruments/boto>`__
 
 .. code-block:: sh
 
@@ -52,14 +52,14 @@ Crontab and docs
 Crontab
 ~~~~~~~
 You can use this script in crontab.
-See [crontab guide](https://linuxconfig.org/linux-crontab-reference-guide)
+See `crontab guide <https://linuxconfig.org/linux-crontab-reference-guide>`__
 
 
 Yandex.Cloud Object Storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you use Yandex.Cloud S3 see [this page] (https://cloud.yandex.ru/docs/storage/instruments/boto#preparations)
+If you use Yandex.Cloud S3 see `this page <https://cloud.yandex.ru/docs/storage/instruments/boto#preparations>`__
 
 
 Third party
 -----------
-[Boto3](https://github.com/boto/boto3)
+`Boto3 <https://github.com/boto/boto3>`__
