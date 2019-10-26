@@ -2,23 +2,21 @@
 
 import os
 import boto3
-import logging
+import pathlib
 import configparser
+
+from logger import logger
 from datetime import datetime
 
 
-# Config
-log_name = str(datetime.today().strftime('%d-%m-%Y'))
-logging.basicConfig(filename=f's3-{log_name}.log',
-                    filemode='w',
-                    format='[%(asctime)s] [%(levelname)s] %(message)s',
-                    datefmt='%D %H:%M:%S',
-                    level=logging.INFO)  # DEBUG / INFO
-
-config = configparser.RawConfigParser()
-config.read('config.cfg')
 
 try:
+    config_path = pathlib.Path.home().joinpath('.ya-tools/')
+    if not os.path.exists(config_path):
+            os.system('mkdir -p {path}'.format(path=config_path))
+    config_file = pathlib.Path.home().joinpath('.ya-tools/sqlbackup.cfg')
+    config = configparser.RawConfigParser()
+    config.read(config_file)
     home = config.get('Database', 'HomeUser')
     db_host = config.get('Database', 'Host')
     db_user = config.get('Database', 'User')
@@ -29,8 +27,8 @@ try:
         os.mkdir(backup_path)
     s3_bucket = config.get('S3', 'Bucket')
 except configparser.NoSectionError:
-    print("Corrupted config or no config file present.")
-    logging.error("Corrupted config or no config file present.")
+    print("Corrupted config or no config file present. Check ~/.ya-tools/sqlbackup.cfg ")
+    logger.error("Corrupted config or no config file present. Check ~/.ya-tools/sqlbackup.cfg")
     quit()
 
 
@@ -43,14 +41,14 @@ def call_time():
 def create_backup(host, user, passwd, database):
     backup_name = f'{backup_path}{call_time()}-{database}.sql'
     if os.path.isfile(backup_name):
-        logging.info(f'Backup {backup_name} already exist')
+        logger.info(f'Backup {backup_name} already exist')
     else:
         dump = f'mysqldump -h{host} -u{user} -p{passwd} {database} > {backup_name}'
         command = os.system(dump)
         if os.path.isfile(backup_name):
-            logging.info(f'Backup for {database} created')
+            logger.info(f'Backup for {database} created')
         else:
-            logging.error(f'Backup not created for {database}')
+            logger.error(f'Backup not created for {database}')
 
 
 # Later...
@@ -86,9 +84,9 @@ def main():
         final = result['ResponseMetadata']['HTTPStatusCode']
         if final == 200:
             os.system(f'rm -f {backup_path}{file}')
-            logging.info(f'File {file} uploaded to S3 and deleted from local storage')
+            logger.info(f'File {file} uploaded to S3 and deleted from local storage')
         else:
-            logging.warning(f'Upload failed for {file}')
+            logger.warning(f'Upload failed for {file}')
 
 
 if __name__ == '__main__':

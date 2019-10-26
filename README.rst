@@ -30,6 +30,9 @@ Then, set up a default region (in e.g. ``~/.aws/config``):
 
 Edit Script Config
 ------------------
+
+Move config file to ``.ya-tools/sqlbackup.cfg``.
+
 Example config file:
 
 .. code-block:: ini
