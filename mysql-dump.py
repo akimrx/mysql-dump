@@ -3,11 +3,28 @@
 import os
 import boto3
 import pathlib
+import logging
 import configparser
 
-from logger import logger
 from datetime import datetime
 
+
+LOGLEVEL = logging.INFO
+
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+
+logformat = '[%(asctime)s] [%(levelname)s] %(message)s'
+logging.basicConfig(level=LOGLEVEL,
+    format=logformat,
+    datefmt='%d/%b/%y %H:%M:%S', 
+    handlers=[
+        logging.FileHandler('logs/bot.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 
 try:
