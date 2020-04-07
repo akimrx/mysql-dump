@@ -11,15 +11,17 @@ from datetime import datetime
 
 LOGLEVEL = logging.INFO
 
-if not os.path.exists('logs'):
-    os.mkdir('logs')
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+LOGDIR = os.path.join(BASEDIR, 'logs')
 
-logformat = '[%(asctime)s] [%(levelname)s] %(message)s'
+if not os.path.exists(LOGDIR):
+    os.mkdir(LOGDIR)
+
 logging.basicConfig(level=LOGLEVEL,
-    format=logformat,
+    format='[%(asctime)s] [%(levelname)s] %(message)s',
     datefmt='%d/%b/%y %H:%M:%S', 
     handlers=[
-        logging.FileHandler('logs/bot.log'),
+        logging.FileHandler(os.path.join(LOGDIR, 'mysqldumper.log')),
         logging.StreamHandler()
     ]
 )
